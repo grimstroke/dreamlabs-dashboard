@@ -1,6 +1,5 @@
-$primary-color: #77b3c4;
-$secondary-color: white;
-$tertiary-color: #6fb7d4;
+@import '../../common/variables.scss';
+
 .nav {
   margin: 0;
   border-radius: 5px 10px 0 0;
@@ -34,7 +33,7 @@ $tertiary-color: #6fb7d4;
       color: $primary-color;
       position: absolute;
       background-color: white;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2);
       border-radius: 4px;
       right: 0;
       width: 150px;
