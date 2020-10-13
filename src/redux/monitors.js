@@ -82,8 +82,8 @@ const initialState = {
       'Risk Level': 'Low',
       'watch List': ['S'],
       'PEP Class': ['1', '2'],
-      'Assign To': 'Julie Sanders',
-      supervisor: 'Julie Sanders',
+      'Assign To': 'Justin trudeau',
+      supervisor: 'Donal Trump',
       staus: true,
     },
     {
@@ -96,7 +96,7 @@ const initialState = {
       'watch List': ['F&P'],
       'PEP Class': ['3'],
       'Assign To': 'Julie Sanders',
-      supervisor: 'Julie Sanders',
+      supervisor: 'Nikolai Tesla',
       staus: true,
     },
     {
@@ -108,11 +108,12 @@ const initialState = {
       'Risk Level': 'Low',
       'watch List': ['S', 'F&P', 'W'],
       'PEP Class': ['1', '2', '3'],
-      'Assign To': 'Julie Sanders',
-      supervisor: 'Julie Sanders',
+      'Assign To': 'Harley McLean',
+      supervisor: 'Brad Pitt',
       staus: true,
     },
   ],
+  toggleHeader: 'toggle headers',
 };
 
 export default function (state = initialState, action) {

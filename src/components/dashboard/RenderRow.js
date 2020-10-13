@@ -6,36 +6,39 @@ import styles from './RenderRow.module.scss';
 
 const RenderRow = (props) => {
   return props.keys.map((key, index) => {
-    switch (typeof props.data[key]) {
-      case 'number':
-      case 'string':
-        return (
-          <td key={index} className={cx(styles['dashboard-td'])}>
-            {props.data[key]}
-          </td>
-        );
-      case 'boolean':
-        return (
-          <td key={index} className={cx(styles['dashboard-td'])}>
-            <input
-              type="checkbox"
-              checked={props.data[key]}
-              disabled={props.data[key]}
-            />
-          </td>
-        );
-      case 'object':
-        if (Array.isArray(props.data[key])) {
+    if (props.headerVisible[key].isVisible) {
+      switch (typeof props.data[key]) {
+        case 'number':
+        case 'string':
           return (
             <td key={index} className={cx(styles['dashboard-td'])}>
-              {props.data[key].join(', ')}
+              {props.data[key]}
             </td>
           );
-        }
-        return null;
-      default:
-        return null;
+        case 'boolean':
+          return (
+            <td key={index} className={cx(styles['dashboard-td'])}>
+              <input
+                type="checkbox"
+                checked={props.data[key]}
+                disabled={props.data[key]}
+              />
+            </td>
+          );
+        case 'object':
+          if (Array.isArray(props.data[key])) {
+            return (
+              <td key={index} className={cx(styles['dashboard-td'])}>
+                {props.data[key].join(', ')}
+              </td>
+            );
+          }
+          return null;
+        default:
+          return null;
+      }
     }
+    return null;
   });
 };
 
