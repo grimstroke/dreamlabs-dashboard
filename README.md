@@ -12,11 +12,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br />
@@ -37,32 +32,18 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### `toggle headers`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The cog on the top right of the table serves as the entry point of toggling the headers in the table. On selecting /unselecting an option the table is immediately re-rendered with the corresponding headers
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `table headers`
 
-### Code Splitting
+On clicking the table headers a drop down option is show with all the uniques values it holds. On selecting any value the table is sorted to show the corresponding value on top.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### `Filters`
 
-### Analyzing the Bundle Size
+The filters are used to show the table in a concise manner. Each heading is from table heading and the values it contains are the unique values which they hold inside table values. Both the filter headers and filter items are currently truncated to 4 to provide good visibility. Future functionalities are to be added.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### `Filters items`
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The all option inside each filter header unselects the checkbox of all filter items and shows the table will all the options selected. On selecting any other filter item all is unchecked and only the respective value is show. Multiple filter items can be selecetd as long as 'all' option is not one among them
