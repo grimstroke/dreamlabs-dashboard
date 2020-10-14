@@ -67,6 +67,7 @@ const Header = (header) => {
 };
 const mapStateToProps = (state) => {
   return {
+    ...state,
     titles: state.header.titles,
     name: state.header.name,
     showProfile: state.header.showProfile,
