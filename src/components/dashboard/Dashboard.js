@@ -9,6 +9,7 @@ import cx from 'classnames';
 import styles from './dashboard.module.scss';
 import DashboardHeader from './DashboardHeader';
 import RenderRow from './RenderRow';
+import Filter from './filter/Filter';
 import cogImage from '../../icons/cog.png';
 
 class Dashboard extends React.Component {
@@ -19,13 +20,17 @@ class Dashboard extends React.Component {
       showHeaderIcon: false,
       visibleheader: [],
       visibleSortHeader: [],
+      filterList: [],
+      filterLength: 4,
     };
     this.state.visibleheader = this.getVisibleHeaders();
     this.state.visibleSortHeader = this.getVisibleSortHeaders();
+    this.state.filterList = this.getFilters();
   }
 
-  //   componentDidMount() {
-  //   }
+  // componentDidMount() {
+  //   this.getFilters();
+  // }
 
   getKeys = () => {
     const { monitors } = this.state;
@@ -81,21 +86,95 @@ class Dashboard extends React.Component {
     return keys.map((key) => {
       if (this.state.visibleheader[key].isVisible) {
         return (
-          <th
-            key={key}
-            onClick={() => {
-              this.toggleSortOptions(key);
-            }}
-            className={cx(styles['table-head-row'])}
-          >
-            {key}
-            {this.state.visibleSortHeader[key].isVisible &&
-              this.getSortContent(key)}
-          </th>
+          key !== 'isHidden' && (
+            <th
+              key={key}
+              onClick={() => {
+                this.toggleSortOptions(key);
+              }}
+              className={cx(styles['table-head-row'])}
+            >
+              {key}
+              {this.state.visibleSortHeader[key].isVisible &&
+                this.getSortContent(key)}
+            </th>
+          )
         );
       }
       return null;
     });
+  };
+
+  setFilter = (type, value, e) => {
+    if (type && value && e) {
+      const filterList = { ...this.state.filterList };
+      if (e.target.checked) {
+        if (value !== 'all') {
+          const index = filterList[type].activeFilters.indexOf('all');
+          if (index > -1) {
+            filterList[type].activeFilters.splice(index, 1);
+          }
+        } else {
+          filterList[type].activeFilters = [];
+        }
+        filterList[type].activeFilters.push(value);
+      } else {
+        const index = filterList[type].activeFilters.indexOf(value);
+        if (index > -1) {
+          filterList[type].activeFilters.splice(index, 1);
+        }
+      }
+      this.setState({
+        filterList,
+      });
+      this.filterMonitors();
+    }
+  };
+
+  isNoFilterAdded = () => {
+    let hasFilter = false;
+    const { filterList } = this.state;
+    const keys = this.getKeys();
+    keys.map((key) => {
+      filterList[key].filterLength = this.state.filterLength;
+      debugger;
+      if (filterList[key].activeFilters.length !== 0) {
+        hasFilter = true;
+      }
+      return key;
+    });
+    console.log(!hasFilter);
+    return !hasFilter;
+  };
+
+  filterMonitors = () => {
+    const { monitors } = this.state;
+    const { filterList } = this.state;
+    const tempMonitorArray = [];
+    const keys = this.getKeys();
+    if (monitors && filterList && keys) {
+      monitors.map((monitor) => {
+        const tempMonitor = { ...monitor };
+        tempMonitor.isHidden = !this.isNoFilterAdded();
+        keys.map((key) => {
+          if (filterList[key].activeFilters.includes('all')) {
+            tempMonitor.isHidden = false;
+          }
+          if (
+            tempMonitor.isHidden &&
+            filterList[key].activeFilters.includes(monitor[key])
+          ) {
+            tempMonitor.isHidden = false;
+          }
+          return key;
+        });
+        tempMonitorArray.push(tempMonitor);
+        return tempMonitor;
+      });
+      this.setState(() => {
+        return { monitors: tempMonitorArray };
+      });
+    }
   };
 
   getToggleheaders = () => {
@@ -170,19 +249,33 @@ class Dashboard extends React.Component {
     return visibleSortHeader;
   };
 
+  getFilters = () => {
+    const filters = this.getUniqueValuesInHeaders();
+    const keys = this.getKeys();
+    keys.map((key) => {
+      filters[key].splice(0, 0, 'all');
+      filters[key].activeFilters = [];
+      filters[key].filterLength = this.state.filterLength;
+      return key;
+    });
+    return filters;
+  };
+
   getRowData = () => {
     const { monitors } = this.state;
     const keys = this.getKeys();
     return monitors.map((row, index) => {
       return (
-        <tr key={index} className={cx(styles['table-row'])}>
-          <RenderRow
-            key={index}
-            data={row}
-            headerVisible={this.state.visibleheader}
-            keys={keys}
-          />
-        </tr>
+        !row.isHidden && (
+          <tr key={index} className={cx(styles['table-row'])}>
+            <RenderRow
+              key={index}
+              data={row}
+              headerVisible={this.state.visibleheader}
+              keys={keys}
+            />
+          </tr>
+        )
       );
     });
   };
@@ -204,29 +297,36 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className={cx(styles.dashboardContainer)}>
-        <DashboardHeader />
-        <div className={cx(styles['icon-container'])}>
-          <img
-            onClick={this.toggleShowHeader}
-            src={cogImage}
-            alt="cog"
-            className={cx(styles['cog-icon'])}
-          />
-          {this.state.showHeaderIcon ? (
-            <div className={cx(styles['toggle-header-content'])}>
-              <h3 className={cx(styles['toggle-header-heading'])}>
-                {this.props.toggleHeader}
-              </h3>
-              {this.getToggleheaders()}
-            </div>
-          ) : null}
+        <Filter
+          filters={this.state.filterList}
+          setFilter={this.setFilter}
+          monitorKeys={this.getKeys()}
+        />
+        <div className={cx(styles['dashboard-table-container'])}>
+          <DashboardHeader />
+          <div className={cx(styles['icon-container'])}>
+            <img
+              onClick={this.toggleShowHeader}
+              src={cogImage}
+              alt="cog"
+              className={cx(styles['cog-icon'])}
+            />
+            {this.state.showHeaderIcon ? (
+              <div className={cx(styles['toggle-header-content'])}>
+                <h3 className={cx(styles['toggle-header-heading'])}>
+                  {this.props.toggleHeader}
+                </h3>
+                {this.getToggleheaders()}
+              </div>
+            ) : null}
+          </div>
+          <table>
+            <thead className={cx(styles['table-head'])}>
+              <tr>{this.getHeaders()}</tr>
+            </thead>
+            <tbody>{this.getRowData()}</tbody>
+          </table>
         </div>
-        <table>
-          <thead className={cx(styles['table-head'])}>
-            <tr>{this.getHeaders()}</tr>
-          </thead>
-          <tbody>{this.getRowData()}</tbody>
-        </table>
       </div>
     );
   }

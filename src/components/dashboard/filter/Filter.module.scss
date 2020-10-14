@@ -1,0 +1,23 @@
+@import '../../../common/variables.scss';
+.filter-container {
+  color: $text-black;
+  width: 15%;
+  background-color: $filter-bg;
+  padding: 20px;
+  h3 {
+    margin: 0;
+  }
+}
+.filter-items-container {
+  display: block;
+  h3 {
+    text-transform: uppercase;
+    color: $text-black;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 10px 0;
+  }
+}
+.filter-item-container {
+  display: flex;
+}

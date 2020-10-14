@@ -17,13 +17,11 @@ const RenderRow = (props) => {
           );
         case 'boolean':
           return (
-            <td key={index} className={cx(styles['dashboard-td'])}>
-              <input
-                type="checkbox"
-                checked={props.data[key]}
-                disabled={props.data[key]}
-              />
-            </td>
+            key !== 'isHidden' && (
+              <td key={index} className={cx(styles['dashboard-td'])}>
+                <input type="checkbox" checked={props.data[key]} disabled />
+              </td>
+            )
           );
         case 'object':
           if (Array.isArray(props.data[key])) {
