@@ -88,3 +88,11 @@
     }
   }
 }
+@media only screen and (max-width: 1000px) {
+  .dashboard-flex-box {
+    width: 100%;
+    .dashboard-item-outer {
+      flex-grow: 1;
+    }
+  }
+}
