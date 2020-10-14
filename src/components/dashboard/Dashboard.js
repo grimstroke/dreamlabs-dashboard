@@ -54,7 +54,6 @@ class Dashboard extends React.Component {
   sortMonitors = (key, item) => {
     const sortedMonitors = this.state.monitors;
     sortedMonitors.sort((first, second) => {
-      debugger;
       if (!Array.isArray(first[key])) {
         if (first[key].includes(item) && !second[key].includes(item)) {
           return -1;
@@ -75,7 +74,6 @@ class Dashboard extends React.Component {
       }
       return 0;
     });
-    console.log(sortedMonitors);
   };
 
   getHeaders = () => {
