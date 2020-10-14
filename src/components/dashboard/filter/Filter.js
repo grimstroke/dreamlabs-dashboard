@@ -20,19 +20,22 @@ class Filter extends React.Component {
                     key={filter}
                     className={cx(styles['filter-item-container'])}
                   >
-                    <input
-                      type="checkbox"
-                      className={cx(styles['filter-checkbox'])}
-                      onChange={(e) => {
-                        this.props.setFilter(key, filter, e);
-                      }}
-                      checked={this.props.filters[key].activeFilters.includes(
-                        filter,
-                      )}
-                      id={key + filter}
-                    />
-                    <span className={cx(styles.checkmark)} />
-                    <label htmlFor={key + filter}> {filter} </label>
+                    <label htmlFor={key + filter}>
+                      {' '}
+                      {filter}
+                      <input
+                        type="checkbox"
+                        className={cx(styles['filter-checkbox'])}
+                        onChange={(e) => {
+                          this.props.setFilter(key, filter, e);
+                        }}
+                        checked={this.props.filters[key].activeFilters.includes(
+                          filter,
+                        )}
+                        id={key + filter}
+                      />
+                      <span className={cx(styles.checkmark)} />
+                    </label>
                   </div>
                 )
               );
