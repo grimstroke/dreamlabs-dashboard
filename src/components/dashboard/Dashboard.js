@@ -107,7 +107,7 @@ class Dashboard extends React.Component {
 
   setFilter = (type, value, e) => {
     if (type && value && e) {
-      const filterList = { ...this.state.filterList };
+      const { filterList } = this.state;
       if (e.target.checked) {
         if (value !== 'all') {
           const index = filterList[type].activeFilters.indexOf('all');
@@ -137,13 +137,11 @@ class Dashboard extends React.Component {
     const keys = this.getKeys();
     keys.map((key) => {
       filterList[key].filterLength = this.state.filterLength;
-      debugger;
       if (filterList[key].activeFilters.length !== 0) {
         hasFilter = true;
       }
       return key;
     });
-    console.log(!hasFilter);
     return !hasFilter;
   };
 
