@@ -5,12 +5,6 @@ import cx from 'classnames';
 import styles from './Filter.module.scss';
 
 class Filter extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {}
-
   getFilterRows = () => {
     return this.props.monitorKeys.map((key, keyIndex) => {
       return (
