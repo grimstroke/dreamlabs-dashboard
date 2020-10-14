@@ -2,4 +2,7 @@
 .dashboard-td {
   padding: 10px;
   color: $text-gray;
+  input[type='checkbox' i]:checked {
+    background-color: blue !important;
+  }
 }
