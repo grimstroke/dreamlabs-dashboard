@@ -106,8 +106,10 @@ class Dashboard extends React.Component {
   };
 
   setFilter = (type, value, e) => {
+    const { filterList } = this.state;
+
+    console.log(filterList);
     if (type && value && e) {
-      const { filterList } = this.state;
       if (e.target.checked) {
         if (value !== 'all') {
           const index = filterList[type].activeFilters.indexOf('all');
@@ -124,8 +126,11 @@ class Dashboard extends React.Component {
           filterList[type].activeFilters.splice(index, 1);
         }
       }
-      this.setState({
-        filterList,
+
+      this.setState(() => {
+        return {
+          filterList,
+        };
       });
       this.filterMonitors();
     }
@@ -136,7 +141,7 @@ class Dashboard extends React.Component {
     const { filterList } = this.state;
     const keys = this.getKeys();
     keys.map((key) => {
-      filterList[key].filterLength = this.state.filterLength;
+      // filterList[key].filterLength = this.state.filterLength;
       if (filterList[key].activeFilters.length !== 0) {
         hasFilter = true;
       }
@@ -169,6 +174,7 @@ class Dashboard extends React.Component {
         tempMonitorArray.push(tempMonitor);
         return tempMonitor;
       });
+
       this.setState(() => {
         return { monitors: tempMonitorArray };
       });
@@ -200,6 +206,7 @@ class Dashboard extends React.Component {
   toggleSortOptions = (key) => {
     const newVisibleSortHeader = this.state.visibleSortHeader;
     newVisibleSortHeader[key].isVisible = !newVisibleSortHeader[key].isVisible;
+
     this.setState(() => {
       return { visibleSortheader: newVisibleSortHeader };
     });
@@ -284,13 +291,34 @@ class Dashboard extends React.Component {
     });
   };
 
-  specificToggleHeader(key) {
+  specificToggleHeader = (key) => {
     const newVisibleHeader = this.state.visibleheader;
     newVisibleHeader[key].isVisible = !newVisibleHeader[key].isVisible;
+
     this.setState(() => {
       return { visibleheader: newVisibleHeader };
     });
-  }
+  };
+
+  showAllFilter = (key) => {
+    const { filterList } = this.state;
+    if (filterList[key]) {
+      filterList[key].filterLength = filterList[key].length;
+    }
+
+    this.setState(() => {
+      return { filterList };
+    });
+  };
+
+  showDefaultFilter = (key) => {
+    const { filterList } = this.state;
+    filterList[key].filterLength = this.state.filterLength;
+
+    this.setState(() => {
+      return { filterList };
+    });
+  };
 
   render() {
     return (
@@ -299,6 +327,9 @@ class Dashboard extends React.Component {
           filters={this.state.filterList}
           setFilter={this.setFilter}
           monitorKeys={this.getKeys()}
+          showAllFilter={this.showAllFilter}
+          showDefaultFilter={this.showDefaultFilter}
+          defaultFilterLength={this.state.filterLength}
         />
         <div className={cx(styles['dashboard-table-container'])}>
           <DashboardHeader />
@@ -318,12 +349,14 @@ class Dashboard extends React.Component {
               </div>
             ) : null}
           </div>
-          <table>
-            <thead className={cx(styles['table-head'])}>
-              <tr>{this.getHeaders()}</tr>
-            </thead>
-            <tbody>{this.getRowData()}</tbody>
-          </table>
+          <div className={cx(styles['overflow-table'])}>
+            <table>
+              <thead className={cx(styles['table-head'])}>
+                <tr>{this.getHeaders()}</tr>
+              </thead>
+              <tbody>{this.getRowData()}</tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

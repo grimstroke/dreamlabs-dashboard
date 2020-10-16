@@ -3,7 +3,10 @@
   font-size: 14px;
   display: flex;
   .dashboard-table-container {
-    width: 100%;
+    width: 85%;
+  }
+  .overflow-table {
+    overflow-x: scroll;
   }
   .icon-container {
     text-align: right;
@@ -127,6 +130,9 @@
         z-index: 1;
         .sort-item {
           padding: 10px;
+          color: #5c5c5c;
+          border-bottom: 1px solid $border-gray;
+          min-width: 100px;
           color: $text-black;
           &:hover {
             color: $primary-color;

@@ -58,7 +58,7 @@
 }
 .dashboard-flex-box {
   display: flex;
-  padding: 20px 30px;
+  flex-wrap: wrap;
   column-gap: 20px;
   .dashboard-item-outer {
     display: flex;
@@ -90,9 +90,11 @@
 }
 @media only screen and (max-width: 1000px) {
   .dashboard-flex-box {
-    width: 100%;
+    row-gap: 20px;
+    padding: 20px 30px;
     .dashboard-item-outer {
       flex-grow: 1;
+      justify-content: center;
     }
   }
 }

@@ -10,6 +10,25 @@
 }
 .filter-items-container {
   display: block;
+  .filter-item-expand,
+  .filter-less {
+    color: $primary-color;
+    font-size: 14px;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin: 10px 0;
+    &::after {
+      content: '';
+      border: solid 5px transparent;
+      border-left: solid 5px $filter-gray;
+      position: absolute;
+      right: -13px;
+      top: 5px;
+      z-index: 1;
+    }
+  }
   h3 {
     text-transform: uppercase;
     color: $text-black;
@@ -19,6 +38,7 @@
   }
   label {
     color: $text-gray;
+    cursor: pointer;
     &:hover {
       color: $primary-color;
       text-shadow: 0 0 0.65px $primary-color, 0 0 0.65px $primary-color;
