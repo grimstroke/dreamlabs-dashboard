@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -5,10 +7,40 @@ import cx from 'classnames';
 import styles from './Filter.module.scss';
 
 class Filter extends React.Component {
+  showOrExpand = (key) => {
+    if (
+      this.props.filters[key].length >
+        this.props.filters[key].filterLength + 1 ||
+      this.props.filters[key].filterLength !== this.props.defaultFilterLength
+    ) {
+      return this.props.filters[key].filterLength ===
+        this.props.defaultFilterLength ? (
+        <div
+          onClick={() => {
+            this.props.showAllFilter(key);
+          }}
+          className={cx(styles['filter-item-expand'])}
+        >
+          Expand All
+        </div>
+      ) : (
+        <div
+          onClick={() => {
+            this.props.showDefaultFilter(key);
+          }}
+          className={cx(styles[('filter-item-expand', 'filter-less')])}
+        >
+          Show less
+        </div>
+      );
+    }
+    return null;
+  };
+
   getFilterRows = () => {
     return this.props.monitorKeys.map((key, keyIndex) => {
       return (
-        keyIndex <= 4 &&
+        keyIndex <= this.props.filters[key].filterLength &&
         typeof this.props.filters[key][1] !== 'boolean' &&
         key !== 'match' && (
           <div key={key} className={cx(styles['filter-items-container'])}>
@@ -40,6 +72,7 @@ class Filter extends React.Component {
                 )
               );
             })}
+            {this.showOrExpand(key)}
           </div>
         )
       );
