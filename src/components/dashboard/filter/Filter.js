@@ -7,6 +7,10 @@ import cx from 'classnames';
 import styles from './Filter.module.scss';
 
 class Filter extends React.Component {
+  componentDidMount() {
+    this.setInputRange(50);
+  }
+
   showOrExpand = (key) => {
     if (
       this.props.filters[key].length >
@@ -31,6 +35,37 @@ class Filter extends React.Component {
           className={cx(styles[('filter-item-expand', 'filter-less')])}
         >
           Show less
+        </div>
+      );
+    }
+    return null;
+  };
+
+  setInputRange = (value) => {
+    const matchElement = document.getElementById('displayMatch');
+    matchElement.innerHTML = `${value}%`;
+    matchElement.style.left = `calc(${value}% `;
+    this.props.setMatchFilter(value);
+  };
+
+  matchRangeChange = (e) => {
+    if (e) {
+      this.setInputRange(e.target.value);
+    }
+  };
+
+  getMatchFilter = () => {
+    if (this.props.monitorKeys.includes('match')) {
+      return (
+        <div className={cx(styles['slider-container'])}>
+          <h3>MATCHING %</h3>
+          <input
+            type="range"
+            max="100"
+            onChange={this.matchRangeChange}
+            className={cx(styles['slider-input'])}
+          />
+          <div id="displayMatch" className={cx(styles.displayMatch)} />
         </div>
       );
     }
@@ -88,6 +123,7 @@ class Filter extends React.Component {
     return (
       <div className={cx(styles['filter-container'])}>
         <h3>{this.props.filterTitle}</h3>
+        {this.getMatchFilter()}
         {this.getFilterRows()}
         <button
           type="button"
