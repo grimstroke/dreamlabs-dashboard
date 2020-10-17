@@ -7,9 +7,29 @@
   h3 {
     margin: 0;
   }
+  .filter-value {
+    color: $text-gray;
+  }
+  .clear-filter {
+    outline: none;
+    background-color: $clear-filter-bg;
+    color: $clear-filter-text;
+    border: none;
+    padding: 7px 0;
+    width: 100%;
+    font-weight: 600;
+    position: relative;
+    &::after {
+      content: 'X';
+      position: absolute;
+      margin-left: 5px;
+      margin-top: -1px;
+      font-size: 15px;
+    }
+  }
 }
 .filter-items-container {
-  display: block;
+  margin: 20px 0;
   .filter-item-expand,
   .filter-less {
     color: $primary-color;
@@ -39,6 +59,7 @@
   label {
     color: $text-gray;
     cursor: pointer;
+    font-weight: 600;
     &:hover {
       color: $primary-color;
       text-shadow: 0 0 0.65px $primary-color, 0 0 0.65px $primary-color;
@@ -90,6 +111,7 @@
 }
 .filter-item-container {
   display: flex;
+  justify-content: space-between;
   position: relative;
   padding-left: 26px;
   padding-bottom: 5px;

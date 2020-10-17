@@ -1,12 +1,12 @@
 @import '../../common/variables.scss';
+.overflow-table {
+  padding: 0 20px;
+}
 .dashboardContainer {
   font-size: 14px;
   display: flex;
   .dashboard-table-container {
     width: 85%;
-  }
-  .overflow-table {
-    overflow-x: scroll;
   }
   .icon-container {
     text-align: right;
@@ -163,6 +163,11 @@
 @media only screen and (max-width: 1000px) {
   .dashboard-table-container {
     width: 100%;
+    overflow-x: scroll;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .overflow-table {
     overflow-x: scroll;
   }
 }

@@ -107,8 +107,6 @@ class Dashboard extends React.Component {
 
   setFilter = (type, value, e) => {
     const { filterList } = this.state;
-
-    console.log(filterList);
     if (type && value && e) {
       if (e.target.checked) {
         if (value !== 'all') {
@@ -311,6 +309,34 @@ class Dashboard extends React.Component {
     });
   };
 
+  clearFilters = () => {
+    const { filterList } = this.state;
+    const keys = this.getKeys();
+    keys.map((key) => {
+      filterList[key].activeFilters = [];
+      return key;
+    });
+    this.setState(() => {
+      return { filterList };
+    });
+    this.filterMonitors();
+  };
+
+  getValueOccurrences = (key, value) => {
+    const { monitors } = this.state;
+    if (key && value && monitors) {
+      let acc = 0;
+      monitors.map((monitor) => {
+        if (monitor[key] === value) {
+          acc++;
+        }
+        return monitor;
+      });
+      return acc;
+    }
+    return null;
+  };
+
   showDefaultFilter = (key) => {
     const { filterList } = this.state;
     filterList[key].filterLength = this.state.filterLength;
@@ -329,7 +355,9 @@ class Dashboard extends React.Component {
           monitorKeys={this.getKeys()}
           showAllFilter={this.showAllFilter}
           showDefaultFilter={this.showDefaultFilter}
+          clearFilters={this.clearFilters}
           defaultFilterLength={this.state.filterLength}
+          getValueOccurrences={this.getValueOccurrences}
         />
         <div className={cx(styles['dashboard-table-container'])}>
           <DashboardHeader />

@@ -12,6 +12,7 @@
   .dashboardButtonContainer {
     display: flex;
     .export-button {
+      outline: none;
       color: $primary-color;
       font-size: 11px;
       font-weight: 600;
@@ -43,6 +44,7 @@
       }
     }
     .new-button {
+      outline: none;
       color: $secondary-color;
       font-size: 11px;
       font-weight: 600;
@@ -59,6 +61,7 @@
 .dashboard-flex-box {
   display: flex;
   flex-wrap: wrap;
+  padding: 20px;
   column-gap: 20px;
   .dashboard-item-outer {
     display: flex;
