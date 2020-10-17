@@ -1,9 +1,64 @@
 @import '../../../common/variables.scss';
+
+.displayMatch {
+  display: inline-block;
+  position: absolute;
+  transform: translateX(-50%);
+  padding: 2px 10px;
+  background-color: $text-black;
+  color: $secondary-color;
+  top: -4px;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 23px;
+    border: 5px solid transparent;
+    border-top: 5px solid $text-black;
+  }
+  &::after {
+    content: '';
+    width: 5px;
+    background-color: $primary-color;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    top: 28px;
+    position: absolute;
+    left: 13px;
+    border-radius: 50%;
+  }
+}
 .filter-container {
   color: $text-black;
   width: 15%;
   background-color: $filter-bg;
   padding: 20px;
+  .slider-container {
+    position: relative;
+  }
+  .slider-input {
+    width: 100%;
+    outline: none;
+    height: 6px;
+    -webkit-appearance: none;
+    overflow: hidden;
+    // background-color: red;
+    &::-webkit-slider-runnable-track {
+      height: 10px;
+      -webkit-appearance: none;
+      color: $primary-color;
+      margin-top: -1px;
+    }
+    &::-webkit-slider-thumb {
+      width: 2px;
+      -webkit-appearance: none;
+      height: 10px;
+      cursor: ew-resize;
+      background: $primary-color;
+      box-shadow: -100px 0 0 100px $primary-color;
+    }
+  }
   h3 {
     margin: 0;
   }

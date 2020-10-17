@@ -201,6 +201,28 @@ class Dashboard extends React.Component {
     });
   };
 
+  setMatchFilter = (value) => {
+    const { monitors } = this.state;
+    if (monitors) {
+      monitors.map((monitor) => {
+        const tempMonitor = monitor;
+        debugger;
+        if (!Number.isInteger(tempMonitor.match)) {
+          tempMonitor.match = 0;
+        }
+        if (tempMonitor.match >= value) {
+          tempMonitor.isHidden = false;
+        } else {
+          tempMonitor.isHidden = true;
+        }
+        return tempMonitor;
+      });
+      this.setState(() => {
+        return { monitors };
+      });
+    }
+  };
+
   toggleSortOptions = (key) => {
     const newVisibleSortHeader = this.state.visibleSortHeader;
     newVisibleSortHeader[key].isVisible = !newVisibleSortHeader[key].isVisible;
@@ -328,7 +350,7 @@ class Dashboard extends React.Component {
       let acc = 0;
       monitors.map((monitor) => {
         if (monitor[key] === value) {
-          acc++;
+          acc += 1;
         }
         return monitor;
       });
@@ -356,6 +378,7 @@ class Dashboard extends React.Component {
           showAllFilter={this.showAllFilter}
           showDefaultFilter={this.showDefaultFilter}
           clearFilters={this.clearFilters}
+          setMatchFilter={this.setMatchFilter}
           defaultFilterLength={this.state.filterLength}
           getValueOccurrences={this.getValueOccurrences}
         />
