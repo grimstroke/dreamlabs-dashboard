@@ -68,6 +68,11 @@ class Filter extends React.Component {
                       />
                       <span className={cx(styles.checkmark)} />
                     </label>
+                    {filter !== 'all' && (
+                      <span className={cx(styles['filter-value'])}>
+                        ({this.props.getValueOccurrences(key, filter)})
+                      </span>
+                    )}
                   </div>
                 )
               );
@@ -84,6 +89,15 @@ class Filter extends React.Component {
       <div className={cx(styles['filter-container'])}>
         <h3>{this.props.filterTitle}</h3>
         {this.getFilterRows()}
+        <button
+          type="button"
+          onClick={() => {
+            this.props.clearFilters();
+          }}
+          className={`${styles['clear-filter']} `}
+        >
+          Clear Filters
+        </button>
       </div>
     );
   }
