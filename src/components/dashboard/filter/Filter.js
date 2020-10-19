@@ -7,6 +7,13 @@ import cx from 'classnames';
 import styles from './Filter.module.scss';
 
 class Filter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hideTooltip: true,
+    };
+  }
+
   componentDidMount() {
     this.setInputRange(50);
   }
@@ -43,8 +50,16 @@ class Filter extends React.Component {
 
   setInputRange = (value) => {
     const matchElement = document.getElementById('displayMatch');
+    this.setState(() => {
+      return { hideTooltip: false };
+    });
     matchElement.innerHTML = `${value}%`;
     matchElement.style.left = `calc(${value}% `;
+    setTimeout(() => {
+      this.setState(() => {
+        return { hideTooltip: true };
+      });
+    }, 1000);
     this.props.setMatchFilter(value);
   };
 
@@ -65,7 +80,12 @@ class Filter extends React.Component {
             onChange={this.matchRangeChange}
             className={cx(styles['slider-input'])}
           />
-          <div id="displayMatch" className={cx(styles.displayMatch)} />
+          <div
+            id="displayMatch"
+            className={cx(styles.displayMatch, {
+              [styles['hidden-tooltip']]: this.state.hideTooltip,
+            })}
+          />
         </div>
       );
     }

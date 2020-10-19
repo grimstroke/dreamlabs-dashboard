@@ -206,7 +206,6 @@ class Dashboard extends React.Component {
     if (monitors) {
       monitors.map((monitor) => {
         const tempMonitor = monitor;
-        debugger;
         if (!Number.isInteger(tempMonitor.match)) {
           tempMonitor.match = 0;
         }

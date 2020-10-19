@@ -1,5 +1,4 @@
 @import '../../../common/variables.scss';
-
 .displayMatch {
   display: inline-block;
   position: absolute;
@@ -27,6 +26,14 @@
     position: absolute;
     left: 13px;
     border-radius: 50%;
+  }
+}
+.hidden-tooltip {
+  left: calc(100%);
+  color: transparent;
+  background: transparent;
+  &::before {
+    border: none;
   }
 }
 .filter-container {
